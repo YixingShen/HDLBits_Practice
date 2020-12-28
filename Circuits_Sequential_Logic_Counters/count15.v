@@ -14,7 +14,7 @@ module top_module (
         if (reset)
             count <= 0;
         else
-            count++;
+            count <= count + 1;
     end
     
 endmodule
