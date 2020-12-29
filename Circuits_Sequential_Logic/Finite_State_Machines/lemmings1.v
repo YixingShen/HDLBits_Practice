@@ -18,7 +18,7 @@ module top_module(
     output walk_left,
     output walk_right); //  
 
-     parameter LEFT=0, RIGHT=1;
+    parameter LEFT=0, RIGHT=1;
     reg state, next_state;
 
     always @(*) begin
@@ -29,11 +29,14 @@ module top_module(
             else
                 next_state = LEFT;
         end
-        else begin
+        else if (state == RIGHT) begin
             if (bump_right)
                 next_state = LEFT;
             else
                 next_state = RIGHT;
+        end
+        else begin
+            next_state = LEFT;
         end
     end
 
