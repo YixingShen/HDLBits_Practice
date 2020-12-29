@@ -28,25 +28,29 @@ module top_module (
             count <= 0;
         end
         else begin
-            count[3:0] <= count[3:0] + 1;
-
             if (cond[0]) begin
                 count[3:0] <= 0;
-                count[7:4] <= count[7:4] + 1;
+                if (cond[1]) begin
+                    count[7:4] <= 0;
+                    if (cond[2]) begin
+                        count[11:8] <= 0;
+                        if (cond[3]) begin
+                            count[15:12] <= 0;
+                        end
+                        else begin
+                            count[15:12] <= count[15:12] + 1;
+                        end
+                    end
+                    else begin
+                        count[11:8] <= count[11:8] + 1;
+                    end
+                end
+                else begin
+                    count[7:4] <= count[7:4] + 1;
+                end
             end
-            
-            if (cond[0] & cond[1]) begin
-                count[7:4] <= 0;
-                count[11:8] <= count[11:8] + 1;
-            end
-            
-            if (cond[0] & cond[1] & cond[2]) begin
-                count[11:8] <= 0;
-                count[15:12] <= count[15:12] + 1;
-            end
-            
-            if (cond[0] & cond[1] & cond[2] & cond[3]) begin
-                count[15:12] <= 0;
+            else begin
+                count[3:0] <= count[3:0] + 1;
             end
         end
     end
