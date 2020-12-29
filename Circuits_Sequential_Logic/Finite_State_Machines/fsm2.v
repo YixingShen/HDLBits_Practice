@@ -20,10 +20,10 @@ module top_module(
     always @(*) begin
         // State transition logic
         if (state == OFF) begin
-           next_state = (j == 1) ? ON : OFF;
+            next_state = (j == 1) ? ON : OFF;
         end
         else begin
-           next_state = (k == 1) ? OFF : ON;
+            next_state = (k == 1) ? OFF : ON;
         end
     end
 

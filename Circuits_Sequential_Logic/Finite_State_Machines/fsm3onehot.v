@@ -50,6 +50,6 @@ module top_module(
     assign next_state[D] = (state[C] &  (in));
 
     // Output logic: 
-    assign out = (state == D) ? 1 : 0;
+    assign out = state[D] ? 1 : 0;
 
 endmodule
