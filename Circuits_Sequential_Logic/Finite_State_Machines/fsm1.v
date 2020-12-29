@@ -19,13 +19,25 @@ module top_module(
 
     always @(*) begin    // This is a combinational always block
         // State transition logic
+        if (state == B) begin
+            next_state = (in == 0) ? A : B;
+        end
+        else begin
+            next_state = (in == 0) ? B : A;
+        end
     end
 
     always @(posedge clk, posedge areset) begin    // This is a sequential always block
         // State flip-flops with asynchronous reset
+        if (areset) begin
+            state <= B;
+        end
+        else begin
+            state <= next_state;
+        end
     end
 
     // Output logic
-    // assign out = (state == ...);
+    assign out = (state == B) ? 1 : 0;
 
 endmodule
