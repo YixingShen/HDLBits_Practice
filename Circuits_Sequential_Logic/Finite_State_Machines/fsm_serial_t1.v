@@ -13,7 +13,7 @@ module top_module(
     input reset,    // Synchronous reset
     output done
 ); 
-    parameter IDLE = 0, START = 1, DATA = 2, STOP = 3, STOP_ERR = 4;
+    parameter IDLE = 0, START = 1, DATA = 2, STOP_OK = 3, STOP_ERR = 4, STOP_ERR2OK = 5;
     parameter LOW = 0, HIGH = 1;
 
     reg [2:0] state, next_state;
@@ -33,13 +33,13 @@ module top_module(
             DATA: begin
                 if (data_count >= 4'd7)
                     if (in == HIGH) //Stop Bit is Detected
-                        next_state = STOP;
+                        next_state = STOP_OK;
                     else //Stop Bit Error
                         next_state = STOP_ERR;
                 else
                     next_state = DATA;
             end
-            STOP: begin
+            STOP_OK: begin
                 if (in == LOW) //Start Bit is Detected
                     next_state = START;
                 else //Idle is Detected 
@@ -47,9 +47,15 @@ module top_module(
             end
             STOP_ERR: begin
                 if (in == HIGH)
-                    next_state = IDLE;
+                    next_state = STOP_ERR2OK;
                 else
                     next_state = STOP_ERR;
+            end
+            STOP_ERR2OK: begin
+                if (in == LOW) //Start Bit is Detected
+                    next_state = START;
+                else //Idle is Detected 
+                    next_state = IDLE;
             end
             default: next_state = IDLE;
         endcase
@@ -70,6 +76,6 @@ module top_module(
         end
     end
 
-    assign done = (state == STOP) ? 1 : 0;
+    assign done = (state == STOP_OK) ? 1 : 0;
 
 endmodule
