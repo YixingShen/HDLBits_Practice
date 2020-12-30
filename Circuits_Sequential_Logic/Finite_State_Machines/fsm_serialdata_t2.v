@@ -107,7 +107,7 @@ module top_module(
             out_byte_tmp = 8'h00;
         end
         else begin
-            if (next_state >= BIT0 && next_state <= BIT7)
+            if ((next_state > START) && (next_state < STOP))
                 out_byte_tmp <= {in,out_byte_tmp[7:1]};
         end
     end

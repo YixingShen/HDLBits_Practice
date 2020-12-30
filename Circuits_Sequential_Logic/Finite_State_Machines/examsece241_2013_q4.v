@@ -13,10 +13,10 @@ module top_module (
     parameter LevelA = 0, LevelB = 1, LevelC = 2, LevelD = 3;
     
     reg [2:0] state, next_state;
-    reg dfr_t;
+    reg dfr_tmp;
     wire [2:0] fr;
 
-    assign dfr = dfr_t;
+    assign dfr = dfr_tmp;
     assign {fr3,fr2,fr1} = fr;
 
     always @(*) begin
@@ -37,15 +37,15 @@ module top_module (
     always @(posedge clk) begin
         if (reset) begin
             state <= 0;
-            dfr_t <= 1;
+            dfr_tmp <= 1;
         end
         else begin
             state <= next_state;
 
             if (next_state < state)
-                dfr_t <= 1;
+                dfr_tmp <= 1;
             else if (next_state > state)
-                dfr_t <= 0;
+                dfr_tmp <= 0;
         end
     end
     
