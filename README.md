@@ -1,3 +1,4 @@
-# My HDLBits Practice
+# My HDLBits Practice Record
 
-https://hdlbits.01xz.net/wiki/Main_Page
+
+HDLBits Web: https://hdlbits.01xz.net/wiki/Main_Page
