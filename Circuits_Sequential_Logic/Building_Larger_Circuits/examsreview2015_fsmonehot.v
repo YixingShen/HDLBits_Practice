@@ -42,5 +42,14 @@ module top_module(
     // assign B3_next = ...;
     // assign S_next = ...;
     // etc.
+    
+    assign B3_next = state[B2];
+    assign S_next = ((d == 0) & state[S]) | ((d == 0) & state[S1]) | ((d == 0) & state[S110]) | ((ack == 1) & state[Wait]);
+    assign S1_next = ((d == 1) & state[S]);
+    assign Count_next = state[B3] | ((done_counting == 0) & state[Count]);
+    assign Wait_next = ((done_counting == 1) & state[Count]) | ((ack == 0) & state[Wait]);
+    assign done = state[Wait];
+    assign counting = state[Count];
+    assign shift_ena = state[B0] | state[B1] | state[B2] | state[B3];
 
 endmodule
